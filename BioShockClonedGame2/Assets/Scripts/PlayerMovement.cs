@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float crouchTimer;
 
     bool isGrounded;
+    float currentVelocity = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -68,16 +69,25 @@ public class PlayerMovement : MonoBehaviour
         {
             
                 crouching = true;
-                
-                controller.height = 2;
+            speed = 3f;
+                controller.height = 1f;
             
             
         }
         else if (Input.GetKeyUp(KeyCode.C))
         {
             crouching = false;
+            speed = 9f;
 
-            controller.height = Mathf.Lerp(controller.height, 3, 0.5f);
+        }
+
+        if (!crouching)
+        {
+            var heightBefore = controller.height;
+            controller.height = Mathf.Lerp(heightBefore, 2.0f, 10 * Time.deltaTime);
+
+            var delta = controller.height - heightBefore;
+            controller.Move(Vector3.up * delta / 2);
         }
 
     }
