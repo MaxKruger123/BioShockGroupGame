@@ -23,6 +23,9 @@ public class Shooting : MonoBehaviour
     public Animator animator;
 
     public PlayerMovement playerMovement;
+    private Transform playerTransform;
+
+    float old_pos;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +33,8 @@ public class Shooting : MonoBehaviour
         cam = Camera.main;
         currentAmmo = maxAmmo;
         playerMovement = GameObject.Find("FirstPersonPlayer").GetComponent<PlayerMovement>();
+        playerTransform = playerMovement.GetComponent<Transform>();
+        old_pos = playerTransform.position.z;
     }
 
     // Update is called once per frame
@@ -52,16 +57,19 @@ public class Shooting : MonoBehaviour
             Shoot();
         }
 
-        if (playerMovement.x == 1 || playerMovement.z == 1 || playerMovement.x == -1 || playerMovement.z == -1)
+        if (old_pos > playerTransform.transform.position.z)
         {
-            animator.SetBool("Walking", true );
-
-
+            animator.SetBool("Walking", true);
+        } else if (old_pos < playerTransform.transform.position.z)
+        {
+            animator.SetBool("Walking", true);
         }
         else
         {
             animator.SetBool("Walking", false);
         }
+
+        old_pos = playerTransform.transform.position.z;
     }
 
     //Method to shoot
