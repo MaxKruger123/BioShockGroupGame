@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 229173716}
   - component: {fileID: 229173718}
   m_Layer: 0
-  m_Name: First Person Player
+  m_Name: FirstPersonPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -230,6 +230,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   crouchTimer: 0
+  x: 0
+  z: 0
 --- !u!1 &453957826
 GameObject:
   m_ObjectHideFlags: 0
@@ -1955,6 +1957,7 @@ MonoBehaviour:
   maxAmmo: 4
   reloadTime: 1
   animator: {fileID: 4378929895967720618}
+  playerMovement: {fileID: 229173718}
 --- !u!95 &4378929895967720618
 Animator:
   serializedVersion: 4

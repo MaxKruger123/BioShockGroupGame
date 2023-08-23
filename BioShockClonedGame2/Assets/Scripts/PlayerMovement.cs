@@ -23,6 +23,11 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded;
     float currentVelocity = 0.0f;
 
+    public float x;
+    public float z;
+
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,8 +46,10 @@ public class PlayerMovement : MonoBehaviour
 
         
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        x = Input.GetAxis("Horizontal");
+        z = Input.GetAxis("Vertical");
+
+        
 
         Vector3 move = transform.right * x + transform.forward * z;
 
