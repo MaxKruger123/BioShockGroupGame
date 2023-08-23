@@ -9,22 +9,47 @@ public class Shooting : MonoBehaviour
 
     public GameObject muzzle;
     public GameObject impact;
+    public float fireRate = 10f;
+
+    private float nextTimeToFire = 0f;
 
     Camera cam;
+
+    public int maxAmmo = 4;
+    private int currentAmmo;
+    public float reloadTime = 20f;
+    private bool isReloading = false;
+
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
+        currentAmmo = maxAmmo;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+
+        if (isReloading)
+            return;
+
+        if (currentAmmo <= 0 || Input.GetKeyDown(KeyCode.R))
         {
+            StartCoroutine(Reload());
+            return;
+        }
+
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
+        {
+            nextTimeToFire = Time.time + 1f / fireRate;
+            animator.SetBool("Shot", true);
             Shoot();
         }
+
+        
     }
 
     //Method to shoot
@@ -38,27 +63,33 @@ public class Shooting : MonoBehaviour
         GameObject muzzleInstance = Instantiate(muzzle, spawnPoint.position, spawnPoint.localRotation);
         muzzleInstance.transform.parent = spawnPoint;
 
+       
+
+        currentAmmo--;
+
         //Bullet that goes forward
         if (Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, distance))
         {
-            Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
-
-            //Apply damage if needed
+            GameObject gunImpact = Instantiate(impact, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(gunImpact, 3);
+           
         }
 
         //Bullet that goes forward
         if (Physics.Raycast(cam.transform.position, cam.transform.forward + new Vector3(-0.2f, 0f, 0f), out hit_1, distance))
         {
-            Instantiate(impact, hit_1.point, Quaternion.LookRotation(hit_1.normal));
-
+            GameObject gunImpact1 = Instantiate(impact, hit_1.point, Quaternion.LookRotation(hit_1.normal));
+            
+            Destroy(gunImpact1, 3);
             //Apply damage if needed
         }
 
         //Bullet that goes up
         if (Physics.Raycast(cam.transform.position, cam.transform.forward + new Vector3(0f, 0.1f, 0f), out hit_2, distance))
         {
-            Instantiate(impact, hit_2.point, Quaternion.LookRotation(hit_2.normal));
-
+            GameObject gunImpact2 = Instantiate(impact, hit_2.point, Quaternion.LookRotation(hit_2.normal));
+            
+            Destroy(gunImpact2, 3);
             //Apply damage if needed
         }
 
@@ -66,9 +97,46 @@ public class Shooting : MonoBehaviour
         //Bullet that goes down
         if (Physics.Raycast(cam.transform.position, cam.transform.forward + new Vector3(0f, -0.1f, 0f), out hit_3, distance))
         {
-            Instantiate(impact, hit_3.point, Quaternion.LookRotation(hit_3.normal));
-
+            GameObject gunImpact3 = Instantiate(impact, hit_3.point, Quaternion.LookRotation(hit_3.normal));
+            
+            Destroy(gunImpact3, 3);
             //Apply damage if needed
         }
+
+        StartCoroutine(Wait());
+    }
+
+    IEnumerator Reload()
+    {
+        isReloading = true;
+        Debug.Log("Reloading...");
+
+        if (currentAmmo == 0)
+        {
+            yield return new WaitForSeconds(5);
+        } else if(currentAmmo == 1)
+        {
+            yield return new WaitForSeconds(4);
+        }
+        else if (currentAmmo == 2)
+        {
+            yield return new WaitForSeconds(3);
+        }
+        else if (currentAmmo == 3)
+        {
+            yield return new WaitForSeconds(2);
+        }
+
+
+        currentAmmo = maxAmmo;
+        isReloading = false;
+    }
+
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(0.01f);
+        animator.SetBool("Shot", false);
+
+
     }
 }
