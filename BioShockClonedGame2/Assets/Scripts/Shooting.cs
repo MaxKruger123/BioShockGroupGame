@@ -26,6 +26,7 @@ public class Shooting : MonoBehaviour
     private Transform playerTransform;
 
     float old_pos;
+    public bool shotGun;
 
     // Start is called before the first frame update
     void Start()
@@ -44,19 +45,20 @@ public class Shooting : MonoBehaviour
         if (isReloading)
             return;
 
-        if (currentAmmo <= 0 || Input.GetKeyDown(KeyCode.R))
+        if (currentAmmo <= 0 || Input.GetKeyDown(KeyCode.R) && !shotGun)
         {
             StartCoroutine(Reload());
-            animator.SetBool("Reloading", true);
+            
 
             return;
 
         }
 
-        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
+        if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire && !isReloading)
         {
             nextTimeToFire = Time.time + 1f / fireRate;
             animator.SetBool("Shot", true);
+            shotGun = true;
             Shoot();
         }
 
@@ -136,29 +138,37 @@ public class Shooting : MonoBehaviour
 
         if (currentAmmo == 0)
         {
+            animator.SetBool("ReloadFour", true);
             yield return new WaitForSeconds(5);
         } else if(currentAmmo == 1)
         {
-            yield return new WaitForSeconds(4);
+            animator.SetBool("ReloadThree", true);
+            yield return new WaitForSeconds(1.4f);
         }
         else if (currentAmmo == 2)
         {
-            yield return new WaitForSeconds(3);
+            animator.SetBool("ReloadTwice", true);
+            yield return new WaitForSeconds(1f);
         }
         else if (currentAmmo == 3)
         {
-            yield return new WaitForSeconds(2);
+            animator.SetBool("Reloading", true);
+            yield return new WaitForSeconds(0.4f);
         }
 
 
         currentAmmo = maxAmmo;
         isReloading = false;
         animator.SetBool("Reloading", false);
+        animator.SetBool("ReloadTwice", false);
+        animator.SetBool("ReloadThree", false);
+        animator.SetBool("ReloadFour", false);
     }
 
     IEnumerator Wait()
     {
         yield return new WaitForSeconds(0.01f);
+        shotGun = false;
         animator.SetBool("Shot", false);
 
 
