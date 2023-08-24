@@ -47,7 +47,10 @@ public class Shooting : MonoBehaviour
         if (currentAmmo <= 0 || Input.GetKeyDown(KeyCode.R))
         {
             StartCoroutine(Reload());
+            animator.SetBool("Reloading", true);
+
             return;
+
         }
 
         if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
@@ -150,6 +153,7 @@ public class Shooting : MonoBehaviour
 
         currentAmmo = maxAmmo;
         isReloading = false;
+        animator.SetBool("Reloading", false);
     }
 
     IEnumerator Wait()
