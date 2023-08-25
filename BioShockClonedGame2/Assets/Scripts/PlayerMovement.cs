@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController controller;
-    public float speed = 9f;
+    public float speed = 6f;
 
     Vector3 velocity;
     public float gravity = -9.81f;
@@ -66,17 +66,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftControl) && isGrounded)
         {
-            speed = 4f;
+            speed = 3f;
         } else if (Input.GetKeyUp(KeyCode.LeftControl) && isGrounded)
         {
-            speed = 9f;
+            speed = 6f;
         }
 
         if (Input.GetKeyDown(KeyCode.C) && isGrounded)
         {
             
                 crouching = true;
-            speed = 3f;
+            speed = 2f;
                 controller.height = 1f;
             
             
