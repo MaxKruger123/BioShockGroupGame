@@ -28,6 +28,24 @@ public class Shooting : MonoBehaviour
     float old_pos;
     public bool shotGun;
 
+    public AudioSource audioSource;
+    public AudioClip shootSound;
+
+    public AudioSource audioSource1;
+    public AudioClip reloadSound1;
+
+    public AudioSource audioSource2;
+    public AudioClip reloadSound2;
+
+    public AudioSource audioSource3;
+    public AudioClip reloadSound3;
+
+    public AudioSource audioSource4;
+    public AudioClip reloadSound4;
+
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +77,7 @@ public class Shooting : MonoBehaviour
             nextTimeToFire = Time.time + 1f / fireRate;
             animator.SetBool("Shot", true);
             shotGun = true;
+            audioSource.PlayOneShot(shootSound);
             Shoot();
         }
 
@@ -128,6 +147,8 @@ public class Shooting : MonoBehaviour
             //Apply damage if needed
         }
 
+        
+
         StartCoroutine(Wait());
     }
 
@@ -139,20 +160,24 @@ public class Shooting : MonoBehaviour
         if (currentAmmo == 0)
         {
             animator.SetBool("ReloadFour", true);
+            audioSource4.PlayOneShot(reloadSound4);
             yield return new WaitForSeconds(5);
         } else if(currentAmmo == 1)
         {
             animator.SetBool("ReloadThree", true);
+            audioSource3.PlayOneShot(reloadSound3);
             yield return new WaitForSeconds(1.4f);
         }
         else if (currentAmmo == 2)
         {
             animator.SetBool("ReloadTwice", true);
+            audioSource2.PlayOneShot(reloadSound2);
             yield return new WaitForSeconds(1f);
         }
         else if (currentAmmo == 3)
         {
             animator.SetBool("Reloading", true);
+            audioSource1.PlayOneShot(reloadSound1);
             yield return new WaitForSeconds(0.4f);
         }
 
