@@ -43,6 +43,10 @@ public class Shooting : MonoBehaviour
     public AudioSource audioSource4;
     public AudioClip reloadSound4;
 
+    public AudioSource audioSource5;
+    public AudioClip walkSound;
+
+    public bool bull;
 
 
 
@@ -83,14 +87,26 @@ public class Shooting : MonoBehaviour
 
         if (old_pos > playerTransform.transform.position.z)
         {
+            if (bull)
+            {
+                audioSource5.Play();
+            }
+            bull = false;
             animator.SetBool("Walking", true);
         } else if (old_pos < playerTransform.transform.position.z)
         {
+            if (bull)
+            {
+                audioSource5.Play();
+            }
+            bull = false;
             animator.SetBool("Walking", true);
         }
         else
         {
             animator.SetBool("Walking", false);
+            audioSource5.Stop();
+            bull = true;
         }
 
         old_pos = playerTransform.transform.position.z;
