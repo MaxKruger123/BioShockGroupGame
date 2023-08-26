@@ -1,0 +1,33 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 04.03.2018 22:23:34
+
+newmtl _tv_wall_mountedtv_wall_mounted_diffuse_shader
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka tv_wall_mounted_diffuse.png
+	map_Kd tv_wall_mounted_diffuse.png
+	map_Ks tv_wall_mounted_s.png
+	map_bump tv_wall_mounted_normal.png
+	bump tv_wall_mounted_normal.png
+
+newmtl _tv_wall_mountedmaterial_1
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.5880 0.5880 0.5880
+	Kd 0.5880 0.5880 0.5880
+	Ks 0.0000 0.0000 0.0000
+	Ke 0.0000 0.0000 0.0000
+	map_Ka tv_screen_static_diffuse_1.png
+	map_Kd tv_screen_static_diffuse_1.png
